@@ -1,0 +1,128 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Employee CRUD Operations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+</head>
+<body>
+    <br />
+    <h2 style="width:90%; margin:0 auto">Employee CRUD Operations</h2>
+    <div style="width:90%; margin:0 auto" class="tablecontainer">
+        <a class="popup btn btn-primary" href="/home/save/0" style="margin-bottom:20px; margin-top:20px;"><i class="fa-solid fa-plus"></i> Add New Employee</a>
+        <table id="myDatatable" class="table table-stripped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Salary</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+    <hr />
+    <footer>
+        <p style="width:90%; margin:0 auto">Asp.Net MVC CRUD Operations Using Datatable plugin</p>
+    </footer>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    @*<script src="~/Scripts/jquery.validate.js"></script>*@
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var oTable = $('#myDatatable').DataTable({
+                "ajax": {
+                    "url": '/home/GetEmployees',
+                    "type": "get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Name", "autowidth": true },
+                    { "data": "Position", "autowidth": true },
+                    { "data": "Office", "autowidth": true },
+                    { "data": "Age", "autowidth": true },
+                    { "data": "Salary", "autowidth": true },
+                    {
+                        "data": "EmployeeID", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/home/save/' + data + '">Edit</a>';
+                        },
+                        "orderable":false
+                    },
+                    {
+                        "data": "EmployeeID", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/home/delete/' + data + '">Delete</a>';
+                        },
+                        "orderable": false
+                    }
+                ]
+            });
+            $('.tablecontainer').on('click', 'a.popup', function (e) {
+                e.preventDefault(0);
+                Openpopup($(this).attr('href'));
+            })
+
+            function Openpopup(pageUrl) {
+                var $pageContent = $('<div/>');
+
+                $pageContent.load(pageUrl, function () {
+                    $('#popupform', $pagecontent).removedata('validator');
+                    $('#popupform', $pagecontent).removedata('unobtrusivevalidation');
+                    $validator.unobtrusive.parse('form');
+
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: false,
+                        autoOpen: false,
+                        resizable: false,
+                        model: true,
+                        title: 'Employee Details Form',
+                        height: 550,
+                        width: 600,
+                        close: function () {
+                            $dialog.dialog('destroy').remove();
+                        }
+                    })
+                $('.popupWindow').on('submit', '#popupForm', function (e) {
+                    var url = $('#popupForm')[0].action;
+                    //if (!$("#popupForm").valid()) {
+                    //    return false;
+                    //}
+
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialog.dialog('close');
+                                oTable.ajax.reload();
+                            }
+                        }
+                    })
+                    e.preventDefault();
+                })
+                $dialog.dialog('open');
+            }
+        });
+    </script>
+</body>
+</html>

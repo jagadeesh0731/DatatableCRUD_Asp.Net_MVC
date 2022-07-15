@@ -1,0 +1,51 @@
+﻿@model DatatableCRUD.Models.Employee
+
+<h2>Save</h2>
+@using (Html.BeginForm("save", "home", FormMethod.Post, new { id = "popupForm" }))
+{
+    if (Model != null && Model.EmployeeID > 0)
+    {
+        @Html.HiddenFor(a => a.EmployeeID)
+    }
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label>Name</label>
+        @Html.TextBoxFor(a => a.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Name, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Position</label>
+        @Html.TextBoxFor(a => a.Position, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Position, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Office</label>
+        @Html.TextBoxFor(a => a.Office, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Office)
+    </div>
+    <div class="form-group">
+        <label>Age</label>
+        @Html.TextBoxFor(a => a.Age, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Age)
+    </div>
+    <div class="form-group">
+        <label>Salary</label>
+        @*<div class="input-group">
+            <span class="input-group-addon">$</span>*@
+            @Html.TextBoxFor(a => a.Salary, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.Salary)
+        @*</div>*@
+    </div>
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    @*<script src="~/Scripts/jquery.validate.js"></script>*@
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+}
