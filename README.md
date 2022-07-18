@@ -1,5 +1,5 @@
 # DatatableCRUD_Asp.Net_MVC
-### An Asp.Net MVC appliacation used to manage all the employee details to create, read, update and delete using jquery datatable with sort, search options and client side validation.
+### An Asp.Net MVC application used to manage all the employee details to create, read, update and delete using jquery datatable with sort, search options and client side validation.
 
 https://user-images.githubusercontent.com/52787121/179261297-53c02571-2d59-4086-8019-01d7d5be2540.mp4
 
