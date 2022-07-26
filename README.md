@@ -9,9 +9,9 @@ Through using the application user can manage all the employees details. (CRUD O
 
 * **Add New Employee:** The option allows user to add new employee details in the datatable.
 
-* **Edit:** The option allows user to edit the already added employee details in the datatable.
+* **Edit:** The option allows user to edit the existed employee details in the datatable.
 
-* **Delete:** The option allows user to delete the already added employee details in the datatable.
+* **Delete:** The option allows user to delete the existed employee details in the datatable.
 
 * **Search:** The option allows user to get the employee details based on user inputs.
 
